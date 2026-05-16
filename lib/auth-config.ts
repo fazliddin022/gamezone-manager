@@ -1,4 +1,5 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "./db";
 import { operators } from "./schema";
@@ -39,12 +40,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: { signIn: "/login" },
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) token.id = user.id;
+    async jwt({ token, user }: { token: JWT; user?: { id?: string } }) {
+      if (user?.id) token.id = user.id;
       return token;
     },
-    async session({ session, token }) {
-      if (token && session.user) {
+    async session({ session, token }: { session: Session; token: JWT }) {
+      if (token?.id && session.user) {
         session.user.id = token.id as string;
       }
       return session;
