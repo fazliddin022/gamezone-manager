@@ -1,7 +1,9 @@
 import { auth } from "@/lib/auth-config";
 import { redirect } from "next/navigation";
+import NavLinks from "../components/NavLinks";
 import LiveClock from "../components/LiveClock";
 import SignOutButton from "../components/SignOutButton";
+
 
 export default async function DashboardLayout({
   children,
@@ -30,34 +32,32 @@ export default async function DashboardLayout({
         zIndex: 50,
         backdropFilter: "blur(20px)",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <div style={{
-            width: "36px",
-            height: "36px",
-            background: "linear-gradient(135deg, #7c3aed, #4f46e5)",
-            borderRadius: "0.75rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 0 15px rgba(124,58,237,0.4)",
-            fontSize: "1.125rem",
-          }}>
-            🎮
-          </div>
-          <div>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <div style={{
+              width: "36px",
+              height: "36px",
+              background: "linear-gradient(135deg, #7c3aed, #4f46e5)",
+              borderRadius: "0.75rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 0 15px rgba(124,58,237,0.4)",
+              fontSize: "1.125rem",
+            }}>
+              🎮
+            </div>
             <p style={{ fontWeight: 700, color: "white", fontSize: "0.875rem" }}>
-              GameZone Manager
-            </p>
-            <p style={{ fontSize: "0.7rem", color: "#6b7280" }}>
-              Boshqaruv paneli
+              GameZone
             </p>
           </div>
+
+          {/* Nav links */}
+          <NavLinks />
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          {/* Live clock */}
           <LiveClock />
-
           <div style={{
             display: "flex",
             alignItems: "center",
@@ -78,12 +78,10 @@ export default async function DashboardLayout({
               {session.user?.name}
             </span>
           </div>
-
           <SignOutButton />
         </div>
       </header>
 
-      {/* Main */}
       <main style={{ padding: "2rem" }}>
         {children}
       </main>
